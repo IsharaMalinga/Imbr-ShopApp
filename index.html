@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="si">
 <head>
   <meta charset="UTF-8">
@@ -8,9 +8,15 @@
   <!-- PWA Manifest & App Icons -->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#059669">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="ShopPOS">
+  <meta name="apple-mobile-web-app-title" content="ShopPOS">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
   <link rel="icon" type="image/svg+xml" href="./icons/icon-192.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -505,19 +511,19 @@
         </div>
         
         <!-- FULLSCREEN BUTTON (PART 1) -->
-        <button onclick="toggleAppFullscreen()" id="btn-top-fullscreen" class="touch-btn bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 px-2.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm" title="Toggle Fullscreen">
+        <button onclick="toggleAppFullscreen()" id="btn-top-fullscreen" class="hidden sm:flex touch-btn bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 px-2.5 py-1.5 rounded-xl text-xs font-bold items-center gap-1 shadow-sm" title="Toggle Fullscreen">
           <span id="fullscreen-icon">⛶</span>
           <span class="hidden sm:inline" id="fullscreen-text">ලොකු කරන්න</span>
         </button>
 
         <!-- Responsive Mode Toggle (Phone / Computer Mode) (PART 5) -->
-        <button onclick="toggleResponsiveLayoutMode()" id="btn-toggle-layout" class="touch-btn bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1" title="Toggle Layout Mode">
+        <button onclick="toggleResponsiveLayoutMode()" id="btn-toggle-layout" class="hidden md:flex touch-btn bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1.5 rounded-xl text-xs font-bold items-center gap-1" title="Toggle Layout Mode">
           <span id="layout-mode-icon">📱</span>
           <span class="hidden md:inline" id="layout-mode-text">Phone Mode</span>
         </button>
 
         <!-- Settings Button (Owner Only) -->
-        <button onclick="switchNavTab('settings')" id="top-btn-settings" class="owner-only touch-btn bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 shadow">
+        <button onclick="switchNavTab('settings')" id="top-btn-settings" class="owner-only hidden sm:flex touch-btn bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1.5 rounded-xl text-xs font-bold items-center gap-1 shadow">
           <span>⚙️</span>
           <span class="hidden sm:inline">සැකසුම්</span>
         </button>
@@ -674,60 +680,52 @@
       </section>
 
       <!-- RIGHT: Current Bill Panel (Full on Mobile, 35% on Desktop) -->
-      <section id="bill-drawer-section" class="w-full lg:w-[35%] flex flex-col h-full bg-white shadow-xl z-20 shrink-0 transition-all duration-200 lg:flex">
-        
-        <!-- MOBILE BACK TO PRODUCTS BUTTON (Visible on screens < lg) -->
-        <div class="lg:hidden px-3 py-2 bg-emerald-600 text-white flex items-center justify-between border-b border-emerald-700 shrink-0">
-          <button type="button" onclick="setMobileSellView('products')" class="touch-btn bg-white/20 hover:bg-white/30 text-white font-black px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 shadow-sm">
-            <span>←</span>
-            <span>තව භාණ්ඩ තෝරන්න (Catalog)</span>
-          </button>
-          <span class="text-xs font-black tracking-wide">🛒 වත්මන් බිල</span>
-        </div>
+      <!-- overflow-y-auto on mobile allows natural scrolling to Pay button; pb-28 ensures Pay button rises above bottom nav -->
+      <section id="bill-drawer-section" class="w-full lg:w-[35%] flex flex-col h-full bg-white shadow-xl z-20 shrink-0 transition-all duration-200 overflow-y-auto lg:overflow-hidden pb-28 lg:pb-0 lg:flex">
 
-        <!-- Bill Header -->
-        <div class="px-2.5 py-2 bg-slate-900 text-white flex items-center justify-between gap-1.5 border-b border-slate-800 shrink-0 flex-nowrap overflow-hidden">
-          <div class="flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-            <span class="text-xs font-bold text-emerald-400 whitespace-nowrap">වත්මන් බිල</span>
-            <span id="bill-daily-no" class="font-mono font-black text-xs px-2 py-0.5 rounded-md bg-amber-400/20 text-amber-300 border border-amber-400/40 whitespace-nowrap inline-flex items-center tracking-wider">#INV-01</span>
-            <span id="bill-cashier-label" class="text-[10px] text-slate-400 font-mono hidden 2xl:inline whitespace-nowrap">Cashier: Owner</span>
+        <!-- Bill Header (Mobile-Friendly, No Clipping) -->
+        <div class="px-2.5 py-2 bg-slate-900 text-white flex items-center justify-between gap-1 border-b border-slate-800 shrink-0">
+          <div class="flex items-center gap-1.5 min-w-0">
+            <span class="text-xs font-black text-emerald-400">බිල</span>
+            <span id="bill-daily-no" class="font-mono font-black text-xs px-2 py-0.5 rounded-md bg-amber-400/20 text-amber-300 border border-amber-400/40 whitespace-nowrap">#INV-01</span>
+            <span id="bill-cashier-label" class="text-[10px] text-slate-400 font-mono hidden xl:inline truncate">Cashier: Owner</span>
           </div>
 
           <div class="flex items-center gap-1 shrink-0">
             <!-- EXPAND BILL ITEMS LIST MODAL BUTTON -->
-            <button onclick="openCartExpandedModal()" id="btn-bill-fs" class="touch-btn text-[11px] bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 px-2 py-1 rounded-lg font-bold flex items-center gap-1 shadow-sm transition whitespace-nowrap" title="ලිස්ට් එක ලොකු කර වෙනම පිටුවකින් බලන්න">
+            <button onclick="openCartExpandedModal()" id="btn-bill-fs" class="touch-btn text-xs bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 px-2 py-1 rounded-lg font-bold flex items-center gap-1 shadow-xs whitespace-nowrap" title="ලිස්ට් එක ලොකු කරන්න">
               <span>🔍</span>
-              <span>ලිස්ට් එක ලොකු කරන්න</span>
+              <span class="hidden sm:inline">ලොකු කරන්න</span>
             </button>
 
             <!-- CLEAR BILL BUTTON -->
-            <button onclick="clearCurrentBill()" class="touch-btn text-[11px] bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/40 px-2 py-1 rounded-lg font-bold flex items-center gap-1 shadow-sm transition whitespace-nowrap" title="වත්මන් බිල්පත හිස් කරන්න">
+            <button onclick="clearCurrentBill()" class="touch-btn text-xs bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white px-2.5 py-1 rounded-lg font-bold flex items-center gap-1 shadow-xs whitespace-nowrap" title="බිල්පත හිස් කරන්න">
               <span>🗑️</span>
               <span>හිස් කරන්න</span>
             </button>
           </div>
         </div>
 
-        <!-- Customer Phone & Name Input with Autocomplete & Auto-suggest -->
-        <div class="px-3 py-1.5 bg-slate-50 border-b border-slate-200 flex items-center gap-1.5 shrink-0 relative">
+        <!-- Customer Phone & Name Input with Autocomplete & Auto-suggest (Responsive) -->
+        <div class="px-2.5 py-1.5 bg-slate-50 border-b border-slate-200 flex items-center gap-1.5 shrink-0 relative">
           <span class="text-slate-400 text-xs">📱</span>
-          <div class="relative w-36 sm:w-44">
-            <input type="tel" id="bill-customer-phone" oninput="onCustomerPhoneInput(this.value)" onfocus="onCustomerPhoneInput(this.value)" placeholder="WhatsApp (07XXXXXXXX)" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs font-mono outline-none focus:border-emerald-500 font-bold" autocomplete="off" />
-            <div id="cust-phone-suggestions" class="hidden absolute left-0 top-full mt-1 w-64 bg-white border border-slate-300 rounded-xl shadow-2xl z-50 max-h-52 overflow-y-auto divide-y divide-slate-100"></div>
+          <div class="relative w-[45%] sm:w-44">
+            <input type="tel" id="bill-customer-phone" oninput="onCustomerPhoneInput(this.value)" onfocus="onCustomerPhoneInput(this.value)" placeholder="07XXXXXXXX" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs font-mono outline-none focus:border-emerald-500 font-bold" autocomplete="off" />
+            <div id="cust-phone-suggestions" class="hidden absolute left-0 top-full mt-1 w-64 max-w-[85vw] bg-white border border-slate-300 rounded-xl shadow-2xl z-50 max-h-52 overflow-y-auto divide-y divide-slate-100"></div>
           </div>
-          <div class="relative flex-1">
+          <div class="relative flex-1 min-w-0">
             <input type="text" id="bill-customer-name" oninput="onCustomerNameInput(this.value)" onfocus="onCustomerNameInput(this.value)" placeholder="පාරිභෝගික නම" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs outline-none focus:border-emerald-500 font-semibold" autocomplete="off" />
             <div id="cust-name-suggestions" class="hidden absolute left-0 top-full mt-1 w-full bg-white border border-slate-300 rounded-xl shadow-2xl z-50 max-h-52 overflow-y-auto divide-y divide-slate-100"></div>
           </div>
         </div>
 
         <!-- Cart Items List: Scrollable with 01., 02., 03... numbering (Compact & Sleek) -->
-        <div id="cart-items-container" class="flex-1 min-h-[80px] overflow-y-auto p-2 space-y-1.5 bg-slate-100/70">
+        <div id="cart-items-container" class="min-h-[60px] lg:flex-1 overflow-y-auto p-2 space-y-1.5 bg-slate-100/70">
           <!-- Dynamically populated -->
-          <div id="cart-empty-placeholder" class="text-center py-8 text-slate-400">
-            <div class="text-3xl mb-1 opacity-60">🛒</div>
+          <div id="cart-empty-placeholder" class="text-center py-3 text-slate-400">
+            <div class="text-2xl mb-0.5 opacity-60">🛒</div>
             <p class="font-bold text-xs text-slate-600">බිල්පත හිස්ය. භාණ්ඩ තෝරන්න.</p>
-            <p class="text-[11px] text-slate-400 mt-0.5">වම්පස ඇති භාණ්ඩ මත Click කර බිලට එකතු කරන්න</p>
+            <p class="text-[10px] text-slate-400 mt-0.5">ඉහළ ඇති "භාණ්ඩ (Catalog)" වෙත ගොස් බිලට එක්කරන්න</p>
           </div>
         </div>
 
@@ -3888,10 +3886,10 @@
       if (!state.cart || state.cart.length === 0) {
         state.cart = [];
         container.innerHTML = `
-          <div id="cart-empty-placeholder" class="text-center py-8 text-slate-400">
-            <div class="text-3xl mb-1 opacity-60">🛒</div>
+          <div id="cart-empty-placeholder" class="text-center py-3 text-slate-400">
+            <div class="text-2xl mb-0.5 opacity-60">🛒</div>
             <p class="font-bold text-xs text-slate-600">බිල්පත හිස්ය. භාණ්ඩ තෝරන්න.</p>
-            <p class="text-[11px] text-slate-400 mt-0.5">වම්පස ඇති භාණ්ඩ මත Click කර බිලට එකතු කරන්න</p>
+            <p class="text-[10px] text-slate-400 mt-0.5">ඉහළ ඇති "භාණ්ඩ (Catalog)" වෙත ගොස් බිලට එක්කරන්න</p>
           </div>
         `;
         recalculateBill();
@@ -5863,6 +5861,9 @@ ${paymentStatusLine}━━━━━━━━━━━━━━━━━━━
 
     function setMobileSellView(view) {
       mobileSellView = view;
+      window.scrollTo(0, 0);
+      const bSec = document.getElementById('bill-drawer-section');
+      if (bSec && view === 'bill') bSec.scrollTop = 0;
       const prodSection = document.getElementById('sell-products-section');
       const billSection = document.getElementById('bill-drawer-section');
       const btnProd = document.getElementById('mob-toggle-products');

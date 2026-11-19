@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#059669"/>
+  <rect x="64" y="64" width="384" height="384" rx="48" fill="#ffffff" fill-opacity="0.12"/>
+  <!-- Open Book and POS Symbol -->
+  <path d="M128 350V180C128 160 155 150 200 150C245 150 256 170 256 170C256 170 267 150 312 150C357 150 384 160 384 180V350C384 350 355 330 312 330C267 330 256 350 256 350C256 350 245 330 200 330C157 330 128 350 128 350Z" fill="#ffffff" stroke="#ffffff" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M256 170V350" stroke="#059669" stroke-width="12" stroke-linecap="round"/>
+  <!-- Coin Icon -->
+  <circle cx="256" cy="110" r="28" fill="#fbbf24" stroke="#d97706" stroke-width="4"/>
+  <text x="256" y="122" font-family="sans-serif" font-weight="bold" font-size="28" fill="#78350f" text-anchor="middle">Rs</text>
+  <text x="256" y="440" font-family="sans-serif" font-weight="900" font-size="44" fill="#ffffff" text-anchor="middle" letter-spacing="2">SHOP APP POS</text>
+</svg>

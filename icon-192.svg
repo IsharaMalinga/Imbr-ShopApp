@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="36" fill="#059669"/>
+  <path d="M48 64C48 55.1634 55.1634 48 64 48H128C136.837 48 144 55.1634 144 64V128C144 136.837 136.837 144 128 144H64C55.1634 144 48 136.837 48 128V64Z" fill="#ffffff" fill-opacity="0.15"/>
+  <!-- Open Book & Cashier Register Motif -->
+  <path d="M52 136V70C52 64 60 60 76 60C92 60 96 66 96 66C96 66 100 60 116 60C132 60 140 64 140 70V136C140 136 130 130 116 130C100 130 96 136 96 136C96 136 92 130 76 130C62 130 52 136 52 136Z" fill="#ffffff" stroke="#ffffff" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M96 66V136" stroke="#059669" stroke-width="4" stroke-linecap="round"/>
+  <!-- Star / Currency Sparkle -->
+  <circle cx="96" cy="42" r="10" fill="#fbbf24"/>
+  <text x="96" y="172" font-family="sans-serif" font-weight="900" font-size="20" fill="#ffffff" text-anchor="middle">SHOP POS</text>
+</svg>
